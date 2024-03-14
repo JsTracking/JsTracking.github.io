@@ -16,6 +16,12 @@
   <h1 id="myh1"></h1>
   <script src="assets/index.js"></script>
   <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1Y-J8JOMVR_IVYvYBfAjiBec-4gHVBoU&callback=initMap"></script>
+  <script>
+    fetch('https://api.ipify.org')
+    .then((res) => res.text())
+    .then(ip => document.getElementById("myh1").textContent = ip)
+    .catch(err => console.log(err));
+  </script>
 </body>
 
 </html>
