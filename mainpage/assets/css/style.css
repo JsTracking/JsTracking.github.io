@@ -1008,4 +1008,27 @@
   font-size: 5em;
 
 }
- 
+ .foto{
+   margin-left: 700px;
+   margin-top: -540px;
+ }
+.fot{
+  margin-left: 950px;
+  margin-top: -150px;
+}
+.seg{
+  background-color: hsl(235, 70%, 60%);
+  margin-left: 50px;
+  padding: 1rem;
+  border: 1px solid hsl(235, 70%, 60%); 
+  width: 550px;
+  font-size: 1.3em;
+
+}
+.ter{
+  margin-left: 50px;
+  font-size: 5.5em;
+}
+.app{
+  margin-top: -265px;
+}
