@@ -972,3 +972,16 @@
    }
  
  }
+ .foo{
+  background-color: #000;
+  height: 150px;
+ }
+.tit{
+  color: #fff;
+  text-align: center;
+}
+.holi{
+  color: #fff;
+  margin-left: 30px;
+}
+ 
