@@ -984,4 +984,28 @@
   color: #fff;
   margin-left: 30px;
 }
+
+.somos-box{
+  
+  background-color: #b8baf1;
+  margin-left: 50px;
+  padding: 1rem;
+  border: 1px solid #b8baf1 ;
+ width: 600px;
+ height: 530px;
+ border-radius: 15px;
+ 
+
+}
+.top{
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.3em;
+}
+.pr{
+  
+  text-align: center;
+  font-size: 5em;
+
+}
  
