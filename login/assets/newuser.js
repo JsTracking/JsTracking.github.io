@@ -1,4 +1,4 @@
-const conexion = require("conexion")
+const conexion = require("../conexion")
 module.exports = {
     insertar(nombre, correo, contrasena){
         return new Promise((resolve, reject) => {

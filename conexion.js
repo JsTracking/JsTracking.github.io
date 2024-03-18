@@ -6,9 +6,3 @@ module.exports = mysql.createPool({
     password: "jstracking",
     database: "jstracking"
 });
-connection.query("SELECT * FROM usuarios", function(error, result, fields){
-    if(error) throw error
-   
-   console.log(result)
-   
-   })
