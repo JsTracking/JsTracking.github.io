@@ -1068,7 +1068,6 @@ width: 130px;
   border: solid transparent;
   display: flex;
   align-items: center;
-  gap: 8px;
   background-color: var(--black);
   color: var(--white);
   min-height: 50px;
@@ -1082,7 +1081,7 @@ width: 130px;
 }
 .usar_navegador{
   margin-left: 680px;
-  margin-top: -260px;
+  margin-top: -50px;
   cursor: pointer;
   width: fit-content;
 }
