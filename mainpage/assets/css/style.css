@@ -1032,3 +1032,79 @@
 .app{
   margin-top: -265px;
 }
+.imgp{
+  margin-left: 800px;
+  margin-top: -370px;
+  height: 10cm;
+  width: 10cm;
+}
+.desc{
+  background-color: var(--header);
+  margin-left: 50px;
+  padding: 1rem;
+  border: 1px solid #b8baf1 ;
+ width: 1200px;
+ height: 530px;
+ border-radius: 15px;
+
+}
+.des{
+  font-size: 1.3cm;
+  text-align: center;
+}
+
+.descarga_android{
+margin-top: 250px;
+margin-left: 400px;
+width: 130px;
+}
+
+.button-android .span {
+  display: block;
+  cursor: pointer;
+}
+
+.button-android {
+  border: solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--black);
+  color: var(--white);
+  min-height: 50px;
+  padding-inline: 25px;
+  font-weight: var(--fw-700);
+  transition: var(--transition-1);
+  border-radius: 30px;
+}
+.button-android:is(:hover, :focus) {
+  background-color: var(--button1);
+}
+.usar_navegador{
+  margin-left: 600px;
+  margin-top: -50px;
+  cursor: pointer;
+  width: fit-content;
+}
+.button-navegador .span {
+  display: block;
+  cursor: pointer;
+}
+
+.button-navegador {
+  border: solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--black);
+  color: var(--white);
+  min-height: 50px;
+  padding-inline: 25px;
+  font-weight: var(--fw-700);
+  transition: var(--transition-1);
+  border-radius: 30px;
+}
+.button-navegador:is(:hover, :focus) {
+  background-color: var(--button1);
+}
+
