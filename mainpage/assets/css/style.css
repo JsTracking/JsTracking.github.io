@@ -1054,7 +1054,7 @@
 }
 
 .descarga_android{
-margin-top: 250px;
+margin-top: 60px;
 margin-left: 400px;
 width: 130px;
 }
@@ -1081,8 +1081,8 @@ width: 130px;
   background-color: var(--button1);
 }
 .usar_navegador{
-  margin-left: 600px;
-  margin-top: -50px;
+  margin-left: 680px;
+  margin-top: -260px;
   cursor: pointer;
   width: fit-content;
 }
@@ -1108,3 +1108,9 @@ width: 130px;
   background-color: var(--button1);
 }
 
+.windows{
+  margin-top: 60px;
+  margin-left: 700px;
+  width: 150px;
+  height: 150px;
+}
