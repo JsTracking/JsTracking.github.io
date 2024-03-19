@@ -9,10 +9,10 @@
             "server": "localhost",
             "port": 3306,
             "driver": "MySQL",
-            "name": "jstracking",
+            "name": "track",
             "database": "jstracking",
             "username": "root",
-            "askForPassword": true
+            "password": ""
         }
     ]
 }

@@ -10,3 +10,7 @@ connection.connect((err) =>{
     if(err) throw err // not connected!
     console.log('Connected to MySQL')
 })
+connection.query('SELECT * FROM usuarios', (error,result) =>{
+    if(error) throw error
+    console.log('los registros son:', result)
+})
