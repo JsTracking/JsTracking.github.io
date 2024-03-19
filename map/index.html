@@ -16,7 +16,7 @@
   
 </head>
 
-<body>
+<>
     <header class="header" data-header>
         <div class="container">
             <h1>
@@ -71,15 +71,15 @@
             <div class="overlay" data-nav-toggler data-overlay></div>
         </div>
     </header>
-    <script src="assets/js/app.js" defer></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-</body>
-
 </html>
-  <div id="map"></div>
-  <h1 id="myh1"></h1>
+<body>
+<div class="map">
+    <h1 class="">THIS IS YOU CURRENT IP ADDRESS</h1>
+    <h1 id="myh1" class=""></h1>
+    <div id="map" class="map"></div>
+</div>
+</body>
+  
   <script src="assets/index.js"></script>
   <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1Y-J8JOMVR_IVYvYBfAjiBec-4gHVBoU&callback=initMap"></script>
   <script>
@@ -88,6 +88,9 @@
     .then(ip => document.getElementById("myh1").textContent = ip)
     .catch(err => console.log(err));
   </script>
+  <script src="assets/js/app.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>

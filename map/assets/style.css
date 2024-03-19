@@ -2,14 +2,19 @@
  * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
- #map {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-    height: 50%;
-    width: 50%;
+ .map {
+  /*center the map horizontal*/
+  margin: auto;
+  width: 100%;
+  max-width: 800px;
+  min-height: 600px;
+  margin-top: 100px;
+  position: fixed;
   }
-  
+  .maptext {
+    text-align: center;
+    margin-top: 100px;
+  }
   /* 
    * Optional: Makes the sample page fill the window. 
    */
