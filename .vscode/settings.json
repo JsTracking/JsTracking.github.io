@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "sqltools.connections": [
         {
             "mysqlOptions": {
@@ -13,10 +12,7 @@
             "name": "jstracking",
             "database": "jstracking",
             "username": "root",
-            "password": ""
+            "askForPassword": true
         }
     ]
-=======
-    "liveServer.settings.port": 5501
->>>>>>> 97d914301a75ba8800fae0ef46acb104b0e62e85
 }
