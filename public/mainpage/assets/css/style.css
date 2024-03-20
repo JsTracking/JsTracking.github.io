@@ -1117,3 +1117,30 @@ width: 130px;
   margin-top: -170px;
   margin-left: 370px;  
 }
+.usme{
+  border-radius: 50%; 
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin-left: 50px;
+}
+.boton_u{
+  border: solid transparent;
+  display: flex;
+  align-items: center;
+  background-color: var(--black);
+  color: var(--white);
+  min-height: 25px;
+  padding-inline: 15px;
+  font-weight: var(--fw-700);
+  transition: var(--transition-1);
+  border-radius: 30px;
+  margin-left: 90px;
+  width: 115px;
+}
+.boton_u:is(:hover, :focus){
+  background-color: var(--button1);
+}
+.nombre_u{
+  margin-left: 82px;
+}
