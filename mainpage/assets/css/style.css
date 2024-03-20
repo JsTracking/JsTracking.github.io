@@ -1034,7 +1034,7 @@
 }
 .imgp{
   margin-left: 800px;
-  margin-top: -370px;
+  margin-top: -260px;
   height: 10cm;
   width: 10cm;
 }
@@ -1112,4 +1112,8 @@ width: 130px;
   margin-left: 700px;
   width: 150px;
   height: 150px;
+}
+.android{
+  margin-top: -170px;
+  margin-left: 370px;  
 }
