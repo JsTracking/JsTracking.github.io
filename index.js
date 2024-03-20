@@ -3,10 +3,8 @@
 const express = require("express");
  //objetos para llamr los metodos express
 const app = express();
-//ruta inicial
-app.get("/", function(req, res){
-    res.send("hello");
-});
+//ruta archivos estaticos (indexes), es decir, paginas sin conexion a base de datos
+app.use(express.static("public"));
 
 //configurar el puerto parar el servidor
 app.listen(3000, function(){
