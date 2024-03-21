@@ -1122,31 +1122,31 @@ width: 130px;
   width: 200px;
   height: 200px;
   object-fit: cover;
-  margin-left: 82px;
+  margin-left: 110px;
 }
 .sami{
   border-radius: 50%; 
   width: 200px;
   height: 200px;
   object-fit: cover;
-  margin-left: 82px;
+  margin-left: 110px;
 }
 .usme{
   border-radius: 50%; 
   width: 200px;
   height: 200px;
   object-fit: cover;
-  margin-left:82px;
+  margin-left: 110px;
 }
 .juli{
   border-radius: 50%; 
   width: 200px;
   height: 200px;
   object-fit: cover;
-  margin-left: 82px;
+  margin-left: 110px;
 }
 .nombre{
-  margin-left: 100px;
+  margin-left: 130px;
 }
 .boton{
   border: solid transparent;
@@ -1159,7 +1159,7 @@ width: 130px;
   font-weight: var(--fw-700);
   transition: var(--transition-1);
   border-radius: 30px;
-  margin-left: 130px;
+  margin-left: 150px;
   width: 115px;
 }
 .boton:is(:hover, :focus){
