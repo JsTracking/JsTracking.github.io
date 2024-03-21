@@ -1165,7 +1165,7 @@ width: 130px;
 .boton:is(:hover, :focus){
   background-color: var(--button1);
 }
-.foot{
- background-color: #fff;
- 
+.ema{
+  margin-left: 700px;
+  color: aliceblue;
 }
