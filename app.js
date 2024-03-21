@@ -21,9 +21,7 @@ connection.connect((err) =>{
 app.set('view engine', 'ejs');
 //ruta para objetos dinamicos
 
-app.get('/', function(req, res){
-    res.render('index.ejs')
-})
+
 
 //registro
 app.get('/registro', function(req, res){
