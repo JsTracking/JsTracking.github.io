@@ -13,10 +13,24 @@ connection.connect((err) =>{
     if(err) throw err // not connected!
     console.log('Connected to MySQL')
 });
- //objetos para llamr los metodos express
+
+//objetos para llamr los metodos express
  const app = express();
-//objetos dinamicos
+
+ //objetos dinamicos
 app.set('view engine', 'ejs');
+//ruta para objetos dinamicos
+
+app.get('/', function(req, res){
+    res.render('index.ejs')
+})
+
+//registro
+app.get('/registro', function(req, res){
+    res.render('registro.ejs')
+})
+//ruta archivos estaticos (indexes), es decir, paginas sin conexion a base de datos
+app.use(express.static("public"));
 
 //metodo para obtener datos de una pagina
 app.use(express.json());
@@ -48,8 +62,7 @@ app.post('/validar', function(req, res) {
 })
 
 
-//ruta archivos estaticos (indexes), es decir, paginas sin conexion a base de datos
-app.use(express.static("public"));
+
 
 //configurar el puerto parar el servidor
 app.listen(3000, function(){
