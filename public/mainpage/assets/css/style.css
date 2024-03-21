@@ -1141,6 +1141,3 @@ width: 130px;
 .boton_u:is(:hover, :focus){
   background-color: var(--button1);
 }
-.nombre_u{
-  margin-left: 82px;
-}
