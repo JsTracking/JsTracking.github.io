@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+  <title>Registro</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <form action="" class="form" method="">
+    <h1 class="text-center">Registro</h1>
+    <!-- Progress bar -->
+    <div class="progressbar">
+      <div class="progress" id="progress"></div>
+
+      <div class="progress-step progress-step-active" data-title="Información Básica"></div>
+      <div class="progress-step" data-title="Informacion Residencia"></div>
+      <div class="progress-step" data-title="Informacion Personal"></div>
+    </div>
+
+    <!-- Steps -->
+    <div class="form-step form-step-active">
+      <div class="col-md-6">
+        <label for="inputnumber">Documento</label>
+        <input class="cel" type="number" id="inputnumber">
+      </div>
+      <div class="col-md-6">
+        <label class="inputtext" for="inputtext">Nombre</label>
+        <input class="nom" type="text" id="inputtext">
+      </div>
+      <div class="col-md-6">
+        <label class="ape" for="inputtext">Apellido</label>
+        <input class="ape" type="text" id="inputtext">
+      </div>
+      <div class="col-md-6">
+        <label class="tel" for="inputtel">Telefono</label>
+        <input class="tel" type="tel" id="inputtel">
+      </div>
+      <div class="col-12">
+        <label for="inputemail">Correo</label>
+        <input class="corr" type="email" id="inputemail" placeholder="">
+      </div>
+      <div class="col-12">
+        <label for="password">contraseña</label>
+        <input class="password" type="password" id="inputpass" placeholder="">
+      </div>
+      <div class="col-12">
+        <label for="inputpass">Confirmar contraseña</label>
+        <input class="comfirmar" type="password" id="inputpass" placeholder="">
+      </div>
+  </form>
+  <div class="input-group">
+    <a href="#" class="btn btn-next width-50 ml-auto">Next</a>
+  </div>
+  </div>
+  <div class="form-step">
+    <div class="input-group">
+      <label for="name">Pais</label>
+      <input type="text" name="pais" id="text" />
+    </div>
+    <div class="input-group">
+      <label for="lastname">Departamento</label>
+      <input type="text" name="departamento" id="text" />
+    </div>
+    <div class="input-group">
+      <label for="lastname">Ciudad</label>
+      <input type="text" name="ciudad" id="text" />
+    </div>
+    <div class="input-group">
+      <label for="lastname">Direccion</label>
+      <input type="text" name="direccion" id="text" />
+    </div>
+
+    <div class="btns-group">
+      <a href="#" class="btn btn-prev">Previous</a>
+      <a href="#" class="btn btn-next">Next</a>
+    </div>
+  </div>
+  <div class="form-step">
+    <div class="input-group">
+      <label for="dob">Fecha de nacimiento</label>
+      <input type="date" name="fecha" id="date" />
+    </div>
+    <div class="input-group">
+      <label for="ID">Tipo de sangre</label>
+      <select name="sangre" id="">
+        <option value="">A+</option>
+        <option value="">A-</option>
+        <option value="">B+</option>
+        <option value="">B-</option>
+        <option value="">AB+</option>
+        <option value="">AB-</option>
+        <option value="">O+</option>
+        <option value="">O-</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label for="lastname">Patalogia</label>
+      <input type="text" name="patologia" id="text" />
+    </div>
+    <div class="input-group">
+      <label for="lastname">Eps</label>
+      <input type="text" name="eps" id="text" />
+    </div>
+
+
+    <div class="btns-group">
+      <a href="#" class="btn btn-prev">Previous</a>
+      <input type="submit" value="Enviar" class="btn" name="Enviar" />
+    </div>
+  </div>
+  </form>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>

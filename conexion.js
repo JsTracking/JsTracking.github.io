@@ -14,7 +14,7 @@ connection.connect((err) =>{
 function select() {
     connection.query('SELECT * FROM usuarios', (error,result) =>{
         if(error) throw error
-        console.log('los registros son:', result[2])
+        console.log('los registros son:', result)
     });
 }
 select();

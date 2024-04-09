@@ -1,6 +1,6 @@
 //archivo crear servidor local
 //importar libreria
-const express = require("express");
+const express = require('express');
 const mysql = require('mysql');
 //put here the credentials of access
 const connection = mysql.createConnection({
@@ -25,10 +25,22 @@ app.set('view engine', 'ejs');
 
 //registro
 app.get('/registro', function(req, res){
-    res.render('registro.ejs')
+    connection.query('SELECT * FROM generos', (err, results) => {
+        if (err) throw err;
+    res.render('registro', {generos : results})
 })
+});
+
+
+
+//login
+app.get('/login', function(req, res){
+    res.render('login.ejs')
+})
+
 //ruta archivos estaticos (indexes), es decir, paginas sin conexion a base de datos
 app.use(express.static("public"));
+
 
 //metodo para obtener datos de una pagina
 app.use(express.json());
@@ -43,19 +55,24 @@ app.use(express.urlencoded({extended:false}));
 app.post('/validar', function(req, res) {
     const datos = req.body;
     //variables para cada input
-    let nombre = datos.nombre;
-    let correo = datos.correo;
-    let contrasena = datos.contrasena;
+    let NOMBRE = datos.NOMBRE;
+    let APELLIDO = datos.APELLIDO;
+    let DOCUMENTO = datos.DOCUMENTO;
+    let FECHANACIMIENTO = datos.FECHANACIMIENTO;
+    let GENEROID = datos.GENERO;
+    let CORREOELECTRONICO = datos.CORREOELECTRONICO;
+    let CONTRASENA = datos.CONTRASENA;
+    let OCUPACION = datos.OCUPACION;
+    let NUMEROTELEFONO = datos.NUMEROTELEFONO;
 
-    connection.query('INSERT INTO usuarios (nombre, correo, contrasena) VALUES (?,?,?)', 
-    [nombre, correo , contrasena ], (error) =>{
-        if(nombre, correo, contrasena == ""){
-        console.log('Todos los campos son obligatorios')
-        }
-        else if(error){
+    connection.query('INSERT INTO usuarios (NOMBRE, APELLIDO, DOCUMENTO, FECHANACIMIENTO, GENEROID, CORREOELECTRONICO, CONTRASENA, OCUPACION, NUMEROTELEFONO) VALUES (?,?,?,?,?,?,?,?,?)', 
+    [NOMBRE, APELLIDO, DOCUMENTO, FECHANACIMIENTO, GENEROID, CORREOELECTRONICO , CONTRASENA, OCUPACION, NUMEROTELEFONO ], (error) =>{
+        if(error){
             throw error;
     }
     else console.log('datos ingresados correctamente')
+    //REDIRECCIONAR A LA PAGINA INICIO
+    res.redirect('/public/index.html')
 });
 })
 
@@ -66,3 +83,4 @@ app.post('/validar', function(req, res) {
 app.listen(3000, function(){
     console.log("servidor creado es http://localhost:3000");
 });
+
