@@ -1165,7 +1165,19 @@ width: 130px;
 .boton:is(:hover, :focus){
   background-color: var(--button1);
 }
-.ema{
-  margin-left: 700px;
+.emai{
+  margin-left: 1100px;
+  margin-top: -58px;
   color: aliceblue;
+}
+.ema{
+  margin-left: 1100px;
+  margin-top: 5px;
+  color: aliceblue;
+}
+.log{
+  width: 200px;
+  height: 99px;
+  margin-top: -80px;
+  margin-left: 550px;
 }
