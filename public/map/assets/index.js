@@ -1,4 +1,4 @@
-/*const mapDiv = document.getElementById("map");
+const mapDiv = document.getElementById("map");
 let map;
 function initMap() {
 navigator.geolocation.getCurrentPosition(function(position){    
@@ -25,5 +25,5 @@ navigator.geolocation.getCurrentPosition(function(position){
   
 }
 initMap();
-*/
+
 
