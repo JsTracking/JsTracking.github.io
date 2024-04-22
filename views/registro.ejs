@@ -100,13 +100,62 @@
     </div>
     <input type="submit" value="submit">
   </form>
-  <form action="/informacionsalud" method="post">
-    <div class="col">
-      <input type="text" class="form-control" placeholder="DOCUMENTO" aria-label="DOCUMENTO" name="DOCUMENTO"
-        id="DOCUMENTO" required>
-    </div>
-    <input type="submit" value="submit">
+  <!DOCTYPE html>
+<html>
+<head>
+  <title>Información de Salud</title>
+</head>
+<body>
+  <h1>Formulario de Información de Salud</h1>
+
+  <form id="informacionSaludForm">
+    <label for="documento">Documento:</label>
+    <input type="text" id="documento" name="documento" required>
+
+    <label for="alergias">Alergias:</label>
+    <input type="text" id="alergias" name="alergias" placeholder="Ingresa las alergias separadas por comas">
+
+    <label for="condicionesMedicas">Condiciones Médicas:</label>
+    <input type="text" id="condicionesMedicas" name="condicionesMedicas" placeholder="Ingresa las condiciones médicas separadas por comas">
+
+    <button type="submit">Enviar</button>
   </form>
+
+  <script>
+    const form = document.getElementById('informacionSaludForm');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const documento = document.getElementById('documento').value;
+      const alergias = document.getElementById('alergias').value.split(',').map(alergia => alergia.trim());
+      const condicionesMedicas = document.getElementById('condicionesMedicas').value.split(',').map(condicion => condicion.trim());
+
+      const formData = {
+        DOCUMENTO: documento,
+        ALERGIAS: alergias,
+        CONDICIONESMEDICAS: condicionesMedicas
+      };
+
+      fetch('/informacionsalud', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Respuesta del servidor:', data);
+        // Maneja la respuesta del servidor según tus necesidades
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>

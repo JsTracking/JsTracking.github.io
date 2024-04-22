@@ -210,26 +210,21 @@ app.post("/direccion", function (req, res) {
   }
   // Uso de la función
   obtenerIdUsuario(DOCUMENTO)
-    .then((idUsuario) => {
-      return obtenerIdPais(FORMNOMBREPAIS).then((idPais) => {
-        return obtenerIdEstado(FORMNOMBREESTADO, idPais).then((idEstado) => {
-          return obtenerIdCiudad(FORMNOMBRECIUDAD, idEstado).then(
-            (idCiudad) => {
-              connection.query(
-                "INSERT INTO direccion (CALLE, PAISID, ESTADOID, CIUDADID, CODIGOPOSTAL, USUARIOID) VALUES (?, ?, ?, ?, ?, ?)",
-                [CALLE, idPais, idEstado, idCiudad, CODIGOPOSTAL, idUsuario],
-                (err, resultadoinsertdireccion) => {
-                  if (err) {
-                    throw err;
-                  } else {
-                    console.log("dir ingresada");
-                  }
-                }
-              );
-            }
-          );
-        });
-      });
+    .then(async (idUsuario) => {
+      const idPais = await obtenerIdPais(FORMNOMBREPAIS);
+      const idEstado = await obtenerIdEstado(FORMNOMBREESTADO, idPais);
+      const idCiudad = await obtenerIdCiudad(FORMNOMBRECIUDAD, idEstado);
+      connection.query(
+        "INSERT INTO direccion (CALLE, PAISID, ESTADOID, CIUDADID, CODIGOPOSTAL, USUARIOID) VALUES (?, ?, ?, ?, ?, ?)",
+        [CALLE, idPais, idEstado, idCiudad, CODIGOPOSTAL, idUsuario],
+        (err, resultadoinsertdireccion) => {
+          if (err) {
+            throw err;
+          } else {
+            console.log("dir ingresada");
+          }
+        }
+      );
     })
     .catch((err) => {
       console.error(err);
@@ -241,8 +236,12 @@ app.post("/direccion", function (req, res) {
 //informacion salud
 
 app.post("/informacionsalud", (req, res) => {
-  const datos = req.body;
-  let DOCUMENTO = datos.DOCUMENTO;
+  const DOCUMENTO = req.body.DOCUMENTO;
+  const FORMALERGIAS = req.body.ALERGIAS;
+  const FORMCONDICIONESMEDICAS = req.body.CONDICIONESMEDICAS;
+  console.log('DOCUMENTO:', DOCUMENTO);
+  console.log('FORMALERGIAS:', FORMALERGIAS);
+  console.log('FORMCONDICIONESMEDICAS:', FORMCONDICIONESMEDICAS);
   //obtener idusuario
   function obtenerIdUsuario(DOCUMENT) {
     return new Promise((resolve, reject) => {
@@ -294,7 +293,7 @@ app.post("/informacionsalud", (req, res) => {
                     reject(err);
                   } else {
                     const IDALERGIA = resultadoinsertalergia.insertId;
-                    console.log('alergia',IDALERGIA);
+                    console.log("alergia", IDALERGIA);
                     connection.query(
                       "INSERT INTO alergias_informacionsalud (ALERGIAID, INFORMACIONSALUDID)VALUES (?,?)",
                       [IDALERGIA, IDINFORMACIONSALUD]
@@ -304,14 +303,15 @@ app.post("/informacionsalud", (req, res) => {
               );
             } else {
               const IDALERGIA = resultadoqueryalergia[0].ALERGIAID;
-              console.log(IDALERGIA);
+              console.log("alergia", IDALERGIA);
               connection.query(
                 "INSERT INTO alergias_informacionsalud (ALERGIAID, INFORMACIONSALUDID)VALUES (?,?)",
                 [IDALERGIA, IDINFORMACIONSALUD]
               );
             }
           }
-        });
+        }
+      );
       });
     });
   }
@@ -320,47 +320,56 @@ app.post("/informacionsalud", (req, res) => {
     return new Promise((resolve, reject) => {
       CONDICIONESMEDICAS.forEach((CONDICIONMEDICA) => {
         const condicionmedicaquery = `SELECT CONDICIONMEDICAID FROM condicionesmedicas WHERE CONDICIONMEDICA = '${CONDICIONMEDICA}'`;
-        connection.query(condicionmedicaquery, (err, resultadoquerycondicionmedica) => {
-          if (err) {
-            reject(err);
-          } else {
-            if (resultadoquerycondicionmedica.length === 0) {
-              connection.query(
-                "INSERT INTO condicionesmedicas (CONDICIONMEDICA) VALUES(?)",
-                [CONDICIONMEDICA],
-                (err, resultadoinsertalergia) => {
-                  if (err) {
-                    reject(err);
-                  } else {
-                    const IDCONDICIONMEDICA = resultadoinsertalergia.insertId;
-                    console.log('alergia',IDCONDICIONMEDICA);
-                    connection.query(
-                      "INSERT INTO alergias_informacionsalud (CONDICIONMEDICAID, INFORMACIONSALUDID)VALUES (?,?)",
-                      [IDCONDICIONMEDICA, IDINFORMACIONSALUD]
-                    );
-                  }
-                }
-              );
+        connection.query(
+          condicionmedicaquery,
+          (err, resultadoquerycondicionmedica) => {
+            if (err) {
+              reject(err);
             } else {
-              const IDCONDICIONMEDICA = resultadoquerycondicionmedica[0].CONDICIONMEDICAID;
-              console.log(IDCONDICIONMEDICA);
-              connection.query(
-                "INSERT INTO alergias_informacionsalud (CONDICIONMEDICAID, INFORMACIONSALUDID)VALUES (?,?)",
-                [IDCONDICIONMEDICA, IDINFORMACIONSALUD]
-              );
+              if (resultadoquerycondicionmedica.length === 0) {
+                connection.query(
+                  "INSERT INTO condicionesmedicas (CONDICIONMEDICA) VALUES(?)",
+                  [CONDICIONMEDICA],
+                  (err, resultadoinsertcondicionmedica) => {
+                    if (err) {
+                      reject(err);
+                    } else {
+                      const IDCONDICIONMEDICA =
+                        resultadoinsertcondicionmedica.insertId;
+                      console.log("condicion medica", IDCONDICIONMEDICA);
+                      connection.query(
+                        "INSERT INTO condicionesmedicas_informacionsalud (CONDICIONMEDICAID, INFORMACIONSALUDID)VALUES (?,?)",
+                        [IDCONDICIONMEDICA, IDINFORMACIONSALUD]
+                      );
+                    }
+                  }
+                );
+              } else {
+                const IDCONDICIONMEDICA =
+                  resultadoquerycondicionmedica[0].CONDICIONMEDICAID;
+                console.log(IDCONDICIONMEDICA);
+                connection.query(
+                  "INSERT INTO condicionesmedicas_informacionsalud (CONDICIONMEDICAID, INFORMACIONSALUDID)VALUES (?,?)",
+                  [IDCONDICIONMEDICA, IDINFORMACIONSALUD]
+                );
+              }
             }
           }
-        });
+        );
       });
     });
   }
 
-  obtenerIdUsuario(DOCUMENTO).then((IdUsuario) => {
-    return insertarInformacionSalud(IdUsuario).then((InformacionSaludId)=>{
-        return insertarAlergias(['MANI','FRIO','POLVO'], InformacionSaludId).then((InformacionSaludId)=>{
-          return insertarCondicionesMedicas(['ALZHEIMER', 'INVALIDEZ'], InformacionSaludId)
-        })
-    })
+  obtenerIdUsuario(DOCUMENTO)
+  .then(async (IdUsuario) => {
+    const InformacionSaludId = await insertarInformacionSalud(IdUsuario);
+
+    const CondicionesMedicas = await insertarCondicionesMedicas(['FORMCONDICIONESMEDICAS'], InformacionSaludId);
+    
+    const Alergias = await insertarAlergias(['FORMALERGIAS'], InformacionSaludId);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
   });
 });
 
