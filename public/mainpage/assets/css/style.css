@@ -1167,7 +1167,7 @@ width: 130px;
 }
 .emai{
   margin-left: 1100px;
-  margin-top: -58px;
+ margin-top: -58px;
   color: aliceblue;
 }
 .ema{
@@ -1180,4 +1180,32 @@ width: 130px;
   height: 99px;
   margin-top: -80px;
   margin-left: 550px;
+}
+
+@media screen and (max-width:1200px){
+  header{
+    padding:40px
+  }
+}
+@media screen and (max-width:720px){
+  .header-action-btn{
+    position:fixed;
+    top:0;
+    right:0;
+    background: #b8baf1;
+    width:250px;
+    height: 100vh;
+    padding: 40px;
+  }
+}
+.navbar-link ul {
+  flex-direction: column;
+  margin-top: 40px;
+}
+.navbar-link ul li {
+margin-top: 30px;
+margin-left: 0;
+}
+.navbar-link ul li a {
+  color: #6e27e1;
 }
