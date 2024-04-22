@@ -1188,7 +1188,7 @@ width: 130px;
   }
 }
 @media screen and (max-width:720px){
-  .header-action-btn{
+  .menu{
     position:fixed;
     top:0;
     right:0;
@@ -1196,16 +1196,27 @@ width: 130px;
     width:250px;
     height: 100vh;
     padding: 40px;
+    z-index: 1;
   }
 }
-.navbar-link ul {
+
+.menu{
   flex-direction: column;
-  margin-top: 40px;
 }
-.navbar-link ul li {
-margin-top: 30px;
+
+.menu ul li {
+margin-top: 10px;
 margin-left: 0;
 }
-.navbar-link ul li a {
-  color: #6e27e1;
+
+.menu li a {
+  color: #000000;
+}
+.intento_menu{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, .1 );
 }
