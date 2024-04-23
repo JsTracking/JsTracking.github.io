@@ -1183,7 +1183,7 @@ width: 130px;
 }
 
 @media screen and (max-width:1200px){
-  header{
+  .header{
     padding:40px
   }
 }
@@ -1200,23 +1200,29 @@ width: 130px;
   }
 }
 
-.menu{
+.menu.container{
   flex-direction: column;
 }
 
-.menu ul li {
+.menu.container ul li {
 margin-top: 10px;
 margin-left: 0;
 }
 
-.menu li a {
+.menu.container li a {
   color: #000000;
 }
-.intento_menu{
+.intento_menu.container{
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
   background: rgba(0, 0, 0, .1 );
+}
+#selected{
+  background: none;
+  padding: 0px;
+  border-radius: none;
+  color: green;
 }
