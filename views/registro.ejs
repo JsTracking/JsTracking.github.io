@@ -118,6 +118,9 @@
     <label for="condicionesMedicas">Condiciones Médicas:</label>
     <input type="text" id="condicionesMedicas" name="condicionesMedicas" placeholder="Ingresa las condiciones médicas separadas por comas">
 
+    <label for="medicamentos">Medicamentos:</label>
+    <input type="text" id="medicamentos" name="medicamentos" placeholder="Ingresa los medicamentos separados por comas">
+    
     <button type="submit">Enviar</button>
   </form>
 
@@ -127,16 +130,21 @@
     form.addEventListener('submit', (event) => {
       event.preventDefault();
 
+      //separar las cadenas de texto de los campos por comas 
       const documento = document.getElementById('documento').value;
       const alergias = document.getElementById('alergias').value.split(',').map(alergia => alergia.trim());
       const condicionesMedicas = document.getElementById('condicionesMedicas').value.split(',').map(condicion => condicion.trim());
+      const medicamentos = document.getElementById('medicamentos').value.split(',').map(medicamento => medicamento.trim());
 
+      //almacenar cada dato de los campos en un objeto 
       const formData = {
         DOCUMENTO: documento,
         ALERGIAS: alergias,
-        CONDICIONESMEDICAS: condicionesMedicas
+        CONDICIONESMEDICAS: condicionesMedicas, 
+        MEDICAMENTOS: medicamentos
       };
 
+      //enviar los datos del obejto al archivo app
       fetch('/informacionsalud', {
         method: 'POST',
         headers: {
