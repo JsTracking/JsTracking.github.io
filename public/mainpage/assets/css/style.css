@@ -1200,11 +1200,11 @@ width: 130px;
   }
 }
 
-.menu.{
+.menu{
   flex-direction: column;
 }
 
-.menu. ul li {
+.menu ul li {
 margin-top: 10px;
 margin-left: 0;
 }
@@ -1220,8 +1220,7 @@ margin-left: 0;
   height: 100vh;
   background: rgba(0, 0, 0, .1 );
 }
-}
 
-#intento_menu: :checked ~ .navbar{
+#intento_menu :checked ~ .navbar{
   flex-direction: column;
 }
