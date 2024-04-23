@@ -1200,19 +1200,19 @@ width: 130px;
   }
 }
 
-.menu.container{
+.menu.{
   flex-direction: column;
 }
 
-.menu.container ul li {
+.menu. ul li {
 margin-top: 10px;
 margin-left: 0;
 }
 
-.menu.container li a {
+.menu li a {
   color: #000000;
 }
-.intento_menu.container{
+.intento_menu{
   position: fixed;
   top: 0;
   left: 0;
@@ -1220,9 +1220,11 @@ margin-left: 0;
   height: 100vh;
   background: rgba(0, 0, 0, .1 );
 }
-#selected{
-  background: none;
-  padding: 0px;
-  border-radius: none;
-  color: green;
+}
+.back{
+  padding: 32px; 0;
+  background-color: #2A394F;
+}
+#intento_menu: :checked ~ .navbar{
+  flex-direction: column;
 }
