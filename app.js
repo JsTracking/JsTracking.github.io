@@ -76,7 +76,7 @@ app.post("/validar", function (req, res) {
         throw error;
       } else console.log("datos ingresados correctamente");
       //REDIRECCIONAR A LA PAGINA INICIO
-      //res.redirect("/");
+      res.redirect("/registro");
     }
   );
 });
@@ -217,7 +217,7 @@ app.post("/direccion", function (req, res) {
           if (err) {
             throw err;
           } else {
-            console.log("dir ingresada");
+            window.alert("dir ingresada");
           }
         }
       );
@@ -226,7 +226,7 @@ app.post("/direccion", function (req, res) {
       console.error(err);
     });
   //REDIRECCIONAR A LA PAGINA INICIO
-  //res.redirect("/");
+  res.redirect("/registro");
 });
 
 //informacion salud
@@ -409,13 +409,14 @@ app.post("/informacionsalud", (req, res) => {
         insertarAlergias(FORMALERGIAS, InformacionSaludId),
         insertarMedicamentos(FORMMEDICAMENTOS, InformacionSaludId),
       ];
+      Document.window.alert('INFORMACION DE SALUD AGREGADA')
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 
     //redireccionar al mapa
-    res.redirect('/map/index.html');
+    res.redirect('/login');
 });
 
 //configurar el puerto parar el servidor
