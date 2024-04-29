@@ -3,14 +3,17 @@
 const express = require("express");
 const mysql = require("mysql");
 const path = require('path');
+
+
 //put here the credentials of access
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "jstracking",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE
 });
-connection.connect((err) => {
+
+connection.connect( err => {
   if (err) throw err; // not connected!
   console.log("Connected to MySQL");
 });
@@ -21,30 +24,29 @@ const app = express();
 //objetos dinamicos
 app.set("view engine", "ejs");
 
-//ruta para objetos dinamicos
 
-//registro
-app.get("/registro", function (req, res) {
+// ENDPOINTS:
+// Registro
+app.get("/registro", function (_req, res) {
   connection.query("SELECT * FROM generos", (err, results) => {
     if (err) throw err;
     res.render("registro", { generos: results });
   });
 });
 
-//login
-app.get("/login", function (req, res) {
+// Login
+app.get("/login", function (_req, res) {
   res.render("login.ejs");
 });
 
-//ruta archivos estaticos (indexes), es decir, paginas sin conexion a base de datos
-
+// Ruta de archivos estaticos (indexes), es decir, páginas estáticas enviadas al front-end (client).
 app.use(express.static(path.join(__dirname, 'public')));
 
-//metodo para obtener datos de una pagina
+// Método para formatear los datos que llegan a este API por parte de los clientes que la consumen.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-//enviar formulario a la ruta /validar
+// Endpoint de validación
 app.post("/validar", function (req, res) {
   const datos = req.body;
   //variables para cada input
@@ -90,6 +92,7 @@ app.post("/direccion", function (req, res) {
   let FORMNOMBRECIUDAD = datos.CIUDADID;
   let CODIGOPOSTAL = datos.CODIGOPOSTAL;
   let DOCUMENTO = datos.DOCUMENTO;
+  
   //funcion obtener id del usuario
   function obtenerIdUsuario(DOCUMENT) {
     return new Promise((resolve, reject) => {
