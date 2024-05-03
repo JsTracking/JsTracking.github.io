@@ -31,10 +31,6 @@ app.get("/registro", function (req, res) {
   });
 });
 
-//login
-app.get("/login", function (req, res) {
-  res.render("login.ejs");
-});
 
 //ruta archivos estaticos (indexes), es decir, paginas sin conexion a base de datos
 
@@ -419,6 +415,13 @@ app.post("/informacionsalud", (req, res) => {
     res.redirect('/login');
 });
 
+//login
+app.get("/login", function (req, res) {
+  res.render("login.ejs");
+});
+
+//validar acceso
+app.post("/validar-login", )
 //configurar el puerto parar el servidor
 app.listen(3000, function () {
   console.log("servidor creado es http://localhost:3000");
