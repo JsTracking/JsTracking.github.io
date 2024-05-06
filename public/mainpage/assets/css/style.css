@@ -1181,7 +1181,7 @@ width: 130px;
   margin-top: -80px;
   margin-left: 550px;
 }
-
+/**
 @media screen and (max-width:1200px){
   .header{
     padding:40px
@@ -1224,3 +1224,4 @@ margin-left: 0;
 #intento_menu :checked ~ .navbar{
   flex-direction: column;
 }
+  **/
