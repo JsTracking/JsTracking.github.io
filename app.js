@@ -2,7 +2,7 @@
 //importar libreria
 const express = require("express");
 const mysql = require("mysql");
-const path = require('path');
+const path = require("path");
 //put here the credentials of access
 const connection = mysql.createConnection({
   host: "localhost",
@@ -31,10 +31,9 @@ app.get("/registro", function (req, res) {
   });
 });
 
-
 //ruta archivos estaticos (indexes), es decir, paginas sin conexion a base de datos
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 //metodo para obtener datos de una pagina
 app.use(express.json());
@@ -405,14 +404,14 @@ app.post("/informacionsalud", (req, res) => {
         insertarAlergias(FORMALERGIAS, InformacionSaludId),
         insertarMedicamentos(FORMMEDICAMENTOS, InformacionSaludId),
       ];
-      Document.window.alert('INFORMACION DE SALUD AGREGADA')
+      Document.window.alert("INFORMACION DE SALUD AGREGADA");
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 
-    //redireccionar al mapa
-    res.redirect('/login');
+  //redireccionar al mapa
+  res.redirect("/login");
 });
 
 //login
@@ -421,7 +420,16 @@ app.get("/login", function (req, res) {
 });
 
 //validar acceso
-app.post("/validar-login", )
+app.post("/validar-login", (req, res) => {
+  const datos = req.body;
+  const CORREOELECTRONICO = datos.CORREOELECTRONICO;
+  const CONTRASENA = datos.CONTRASENA;
+
+  function validarcorreo(CORREOELECTRONICO, CONTRASENA) {
+    const usuarioquery = `SELECT CORREOELECTRONICO FROM usuarios WHERE CORREOELECTRONICO == '${CORREOELECTRONICO}' `;
+  }
+  connection.query(usuarioquery, (resultadoqueryusuario, err) => {});
+});
 //configurar el puerto parar el servidor
 app.listen(3000, function () {
   console.log("servidor creado es http://localhost:3000");
