@@ -1,83 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #8D67AB;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #8d67ab;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
 
-    .login-container {
-      background-color: #fff;
-      border-radius: 10px;
-      padding: 40px;
-      width: 400px;
-      text-align: center;
-      position: relative;
-    }
+      .login-container {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 40px;
+        width: 400px;
+        text-align: center;
+        position: relative;
+      }
 
-    .login-container::before {
-      content: "";
-      position: absolute;
-      top: -50px;
-      left: -50px;
-      width: 150px;
-      height: 150px;
-      background-color: #F7ADC6;
-      border-radius: 50%;
-    }
+      .login-container::before {
+        content: "";
+        position: absolute;
+        top: -50px;
+        left: -50px;
+        width: 150px;
+        height: 150px;
+        background-color: #f7adc6;
+        border-radius: 50%;
+      }
 
-    h1 {
-      color: #8D67AB;
-      margin-bottom: 30px;
-    }
+      h1 {
+        color: #8d67ab;
+        margin-bottom: 30px;
+      }
 
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
+      input[type="email"],
+      input[type="password"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
 
-    button {
-      background-color: #8D67AB;
-      color: white;
-      padding: 14px 20px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 100%;
-    }
+      button {
+        background-color: #8d67ab;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+      }
 
-    button:hover {
-      background-color: #7B52AB;
-    }
-  </style>
-</head>
-<body>
-  <div class="login-container">
-    <h1>Login</h1>
-    <form action="/validar-login" method="post">
-      <input type="email" placeholder="email@example.com" name="CORREOELECTRONICO" id="CORREOELECTRONICO" required>
-      <input type="password" placeholder="Password" name="CONTRASENA" id="CONTRASENA" required>
-      <button type="submit">Login</button>
-    </form>
-  </div>
-  <script>
+      button:hover {
+        background-color: #7b52ab;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h1>Login</h1>
+      <form id="form-login">
+        <input
+          type="email"
+          placeholder="email@example.com"
+          name="CORREOELECTRONICO"
+          id="CORREOELECTRONICO"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          name="CONTRASENA"
+          id="CONTRASENA"
+        />
+        <button type="submit">Login</button>
+      </form>
+    </div>
+    <script>
+      const form = document.getElementById('form-login')
+      
+      form.addEventListener('submit',(event)=>{
+        event.preventDefault();
 
-  </script>
-</body>
+        const correoelectronico = document.getElementById('CORREOELECTRONICO').value;
+        const contrasena = document.getElementById('CONTRASENA').value;
+        
+        const formdata = {
+          CORREOELECTRONICO: correoelectronico,
+          CONTASENA: contrasena
+        }
+        fetch('/validar-login',{
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify(formdata)
+        })
+        .then(response =>{ 
+        if(response.status == 403) alert('correo invalido');
+        else window.location.href = 'http://localhost:3000/map'
+      })
+      })
+    </script>
+  </body>
 </html>

@@ -1,8 +1,11 @@
 //archivo crear servidor local
 //importar libreria
+const { resolve } = require("dns");
 const express = require("express");
 const mysql = require("mysql");
 const path = require("path");
+const { default: swal } = require("sweetalert");
+const sweetalert = require("sweetalert");
 //put here the credentials of access
 const connection = mysql.createConnection({
   host: "localhost",
@@ -419,16 +422,33 @@ app.get("/login", function (req, res) {
   res.render("login.ejs");
 });
 
+
+
 //validar acceso
-app.post("/validar-login", (req, res) => {
+app.post("/validar-login", (req, res, next) => {
   const datos = req.body;
   const CORREOELECTRONICO = datos.CORREOELECTRONICO;
   const CONTRASENA = datos.CONTRASENA;
 
-  function validarcorreo(CORREOELECTRONICO, CONTRASENA) {
-    const usuarioquery = `SELECT CORREOELECTRONICO FROM usuarios WHERE CORREOELECTRONICO == '${CORREOELECTRONICO}' `;
+  function validarcorreo(CORREOELECTRONICO) {
+    //return new Promise((resolve, reject) => {
+    const usuarioquery = `SELECT USUARIOID FROM usuarios WHERE CORREOELECTRONICO = '${CORREOELECTRONICO}'`;
+    connection.query(usuarioquery, (err, resultadoqueryusuario) => {
+      if (err) {
+        throw err;
+      } else {
+        if (resultadoqueryusuario.length == 0) {
+          res.status(403).send();
+        } else {
+          console.log("SU ID", resultadoqueryusuario[0].USUARIOID);
+          res.status(200).send();
+          
+        }
+      }
+    });
+    //});
   }
-  connection.query(usuarioquery, (resultadoqueryusuario, err) => {});
+  validarcorreo(CORREOELECTRONICO);
 });
 //configurar el puerto parar el servidor
 app.listen(3000, function () {
