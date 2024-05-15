@@ -1,34 +1,27 @@
+const connection = require('./src/routes/connection')
 //archivo crear servidor local
 //importar libreria
 const { resolve } = require("dns");
 const express = require("express");
-const mysql = require("mysql");
+
 const path = require("path");
 const { default: swal } = require("sweetalert");
 const sweetalert = require("sweetalert");
 //put here the credentials of access
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "jstracking",
-});
-connection.connect((err) => {
-  if (err) throw err; // not connected!
-  console.log("Connected to MySQL");
-});
+
 
 //objetos para llamr los metodos express
 const app = express();
 
 //objetos dinamicos
-app.set("view engine", "ejs");
+app.set('views', path.join(__dirname, '/src/views'));
+app.set('view engine', 'ejs');
 
 //ruta para objetos dinamicos
 
 //registro
 app.get("/registro", function (req, res) {
-  connection.query("SELECT * FROM generos", (err, results) => {
+  connection.connection.query("SELECT * FROM generos", (err, results) => {
     if (err) throw err;
     res.render("registro", { generos: results });
   });
@@ -56,7 +49,7 @@ app.post("/validar", function (req, res) {
   let OCUPACION = datos.OCUPACION;
   let NUMEROTELEFONO = datos.NUMEROTELEFONO;
 
-  connection.query(
+  connection.connection.query(
     "INSERT INTO usuarios (NOMBRE, APELLIDO, DOCUMENTO, FECHANACIMIENTO, GENEROID, CORREOELECTRONICO, CONTRASENA, OCUPACION, NUMEROTELEFONO) VALUES (?,?,?,?,?,?,?,?,?)",
     [
       NOMBRE,
@@ -74,12 +67,12 @@ app.post("/validar", function (req, res) {
         throw error;
       } else console.log("datos ingresados correctamente");
       //REDIRECCIONAR A LA PAGINA INICIO
-      res.redirect("/registro");
+      res.redirect("/login");
     }
   );
 });
 
-app.post("/direccion", function (req, res) {
+/*app.post("/direccion", function (req, res) {
   const datos = req.body;
   //variables
   let CALLE = datos.CALLE;
@@ -226,7 +219,13 @@ app.post("/direccion", function (req, res) {
   //REDIRECCIONAR A LA PAGINA INICIO
   res.redirect("/registro");
 });
-
+*/
+//renderizar el registro informacion salud
+app.get("/registroinformacionsalud", function (req, res) {
+  res.render("registroinformacionsalud.ejs");
+});
+//requerir las funciones de insertar salud
+const functioninsertsalud = require('./src/routes/registroinformacionsalud')
 //informacion salud
 
 app.post("/informacionsalud", (req, res) => {
@@ -238,218 +237,38 @@ app.post("/informacionsalud", (req, res) => {
   console.log("FORMALERGIAS:", FORMALERGIAS);
   console.log("FORMCONDICIONESMEDICAS:", FORMCONDICIONESMEDICAS);
   console.log("FORMMEDICAMENTOS", FORMMEDICAMENTOS);
-  //obtener idusuario
-  function obtenerIdUsuario(DOCUMENT) {
-    return new Promise((resolve, reject) => {
-      const usuarioquery = `SELECT USUARIOID FROM usuarios WHERE DOCUMENTO = '${DOCUMENT}'`;
-      connection.query(usuarioquery, (err, resultadoqueryusuario) => {
-        if (err) {
-          reject(err);
-        } else {
-          const IDUSUARIO = resultadoqueryusuario[0].USUARIOID;
-          console.log("USUARIO: ", IDUSUARIO);
-          resolve(IDUSUARIO);
-        }
-      });
-    });
-  }
-
-  //insertar en informacion salud y obtener id
-  function insertarInformacionSalud(IDUSUARIO) {
-    return new Promise((resolve, reject) => {
-      connection.query(
-        "INSERT INTO informacionSalud (USUARIOID) VALUES(?)",
-        [IDUSUARIO],
-        (err, resultadoinsertinformacion) => {
-          if (err) {
-            reject(err);
-          } else {
-            const IDINFORMACIONSALUD = resultadoinsertinformacion.insertId;
-            console.log("IDINFORACIONSALUD: ", IDINFORMACIONSALUD);
-            resolve(IDINFORMACIONSALUD);
-          }
-        }
-      );
-    });
-  }
-
-  //insertar alergias
-  function insertarAlergias(ALERGIAS, IDINFORMACIONSALUD) {
-    return new Promise((resolve, reject) => {
-      ALERGIAS.forEach((ALERGIA) => {
-        const alergiasquery = `SELECT ALERGIAID FROM alergias WHERE ALERGIA = '${ALERGIA}'`;
-        connection.query(alergiasquery, (err, resultadoqueryalergia) => {
-          if (err) {
-            reject(err);
-          } else {
-            if (resultadoqueryalergia.length === 0) {
-              connection.query(
-                "INSERT INTO alergias (ALERGIA) VALUES(?)",
-                [ALERGIA],
-                (err, resultadoinsertalergia) => {
-                  if (err) {
-                    reject(err);
-                  } else {
-                    const IDALERGIA = resultadoinsertalergia.insertId;
-                    console.log("ALERGIA: ", IDALERGIA);
-                    connection.query(
-                      "INSERT INTO alergias_informacionsalud (ALERGIAID, INFORMACIONSALUDID)VALUES (?,?)",
-                      [IDALERGIA, IDINFORMACIONSALUD]
-                    );
-                  }
-                }
-              );
-            } else {
-              const IDALERGIA = resultadoqueryalergia[0].ALERGIAID;
-              console.log("ALERGIA: ", IDALERGIA);
-              connection.query(
-                "INSERT INTO alergias_informacionsalud (ALERGIAID, INFORMACIONSALUDID)VALUES (?,?)",
-                [IDALERGIA, IDINFORMACIONSALUD]
-              );
-            }
-          }
-        });
-      });
-    });
-  }
-
-  //insertar las condiciones medicas
-  function insertarCondicionesMedicas(CONDICIONESMEDICAS, IDINFORMACIONSALUD) {
-    return new Promise((resolve, reject) => {
-      CONDICIONESMEDICAS.forEach((CONDICIONMEDICA) => {
-        const condicionmedicaquery = `SELECT CONDICIONMEDICAID FROM condicionesmedicas WHERE CONDICIONMEDICA = '${CONDICIONMEDICA}'`;
-        connection.query(
-          condicionmedicaquery,
-          (err, resultadoquerycondicionmedica) => {
-            if (err) {
-              reject(err);
-            } else {
-              if (resultadoquerycondicionmedica.length === 0) {
-                connection.query(
-                  "INSERT INTO condicionesmedicas (CONDICIONMEDICA) VALUES(?)",
-                  [CONDICIONMEDICA],
-                  (err, resultadoinsertcondicionmedica) => {
-                    if (err) {
-                      reject(err);
-                    } else {
-                      const IDCONDICIONMEDICA =
-                        resultadoinsertcondicionmedica.insertId;
-                      console.log("CONDICION MEDICA: ", IDCONDICIONMEDICA);
-                      connection.query(
-                        "INSERT INTO condicionesmedicas_informacionsalud (CONDICIONMEDICAID, INFORMACIONSALUDID)VALUES (?,?)",
-                        [IDCONDICIONMEDICA, IDINFORMACIONSALUD]
-                      );
-                    }
-                  }
-                );
-              } else {
-                const IDCONDICIONMEDICA =
-                  resultadoquerycondicionmedica[0].CONDICIONMEDICAID;
-                console.log("CONDICION MEDICA: ", IDCONDICIONMEDICA);
-                connection.query(
-                  "INSERT INTO condicionesmedicas_informacionsalud (CONDICIONMEDICAID, INFORMACIONSALUDID)VALUES (?,?)",
-                  [IDCONDICIONMEDICA, IDINFORMACIONSALUD]
-                );
-              }
-            }
-          }
-        );
-      });
-    });
-  }
-
-  //insertar las medicamentos
-  function insertarMedicamentos(MEDICAMENTOS, IDINFORMACIONSALUD) {
-    return new Promise((resolve, reject) => {
-      MEDICAMENTOS.forEach((MEDICAMENTO) => {
-        const medicamentoquery = `SELECT MEDICAMENTOID FROM medicamentos WHERE MEDICAMENTO = '${MEDICAMENTO}'`;
-        connection.query(medicamentoquery, (err, resultadoquerymedicamento) => {
-          if (err) {
-            reject(err);
-          } else {
-            if (resultadoquerymedicamento.length === 0) {
-              connection.query(
-                "INSERT INTO medicamentos (MEDICAMENTO) VALUES(?)",
-                [MEDICAMENTO],
-                (err, resultadoinsertmedicamento) => {
-                  if (err) {
-                    reject(err);
-                  } else {
-                    const IDMEDICAMENTO = resultadoinsertmedicamento.insertId;
-                    console.log("MEDICAMENTOS: ", IDMEDICAMENTO);
-                    connection.query(
-                      "INSERT INTO medicamentos_informacionsalud (MEDICAMENTOID, INFORMACIONSALUDID)VALUES (?,?)",
-                      [IDMEDICAMENTO, IDINFORMACIONSALUD]
-                    );
-                  }
-                }
-              );
-            } else {
-              const IDMEDICAMENTO = resultadoquerymedicamento[0].MEDICAMENTOID;
-              console.log("MEDICAMENTO: ", IDMEDICAMENTO);
-              connection.query(
-                "INSERT INTO medicamentos_informacionsalud (MEDICAMENTOID, INFORMACIONSALUDID)VALUES (?,?)",
-                [IDMEDICAMENTO, IDINFORMACIONSALUD]
-              );
-            }
-          }
-        });
-      });
-    });
-  }
-
-  obtenerIdUsuario(DOCUMENTO)
+  functioninsertsalud.obtenerIdUsuario(DOCUMENTO)
     .then(async (IdUsuario) => {
-      const InformacionSaludId = await insertarInformacionSalud(IdUsuario);
+      const InformacionSaludId = await functioninsertsalud.insertarInformacionSalud(IdUsuario);
 
       const promesas = [
-        insertarCondicionesMedicas(FORMCONDICIONESMEDICAS, InformacionSaludId),
-        insertarAlergias(FORMALERGIAS, InformacionSaludId),
-        insertarMedicamentos(FORMMEDICAMENTOS, InformacionSaludId),
+        functioninsertsalud.insertarCondicionesMedicas(FORMCONDICIONESMEDICAS, InformacionSaludId),
+        functioninsertsalud.insertarAlergias(FORMALERGIAS, InformacionSaludId),
+        functioninsertsalud.insertarMedicamentos(FORMMEDICAMENTOS, InformacionSaludId),
       ];
-      Document.window.alert("INFORMACION DE SALUD AGREGADA");
+      res.status(202).send()
     })
     .catch((error) => {
       console.error("Error:", error);
     });
-
   //redireccionar al mapa
-  res.redirect("/login");
-});
+  //res.redirect("/");
+})
 
-//login
+//hacer el render del login
 app.get("/login", function (req, res) {
   res.render("login.ejs");
 });
-
-
-
-//validar acceso
-app.post("/validar-login", (req, res, next) => {
+//requerir el modulo exportado para la validacion
+const functionvalidarcorreo = require ('./src/routes/validar-login');
+//recibir los datos del front
+app.post("/validar-login", (req, res) => {
   const datos = req.body;
   const CORREOELECTRONICO = datos.CORREOELECTRONICO;
   const CONTRASENA = datos.CONTRASENA;
-
-  function validarcorreo(CORREOELECTRONICO) {
-    //return new Promise((resolve, reject) => {
-    const usuarioquery = `SELECT USUARIOID FROM usuarios WHERE CORREOELECTRONICO = '${CORREOELECTRONICO}'`;
-    connection.query(usuarioquery, (err, resultadoqueryusuario) => {
-      if (err) {
-        throw err;
-      } else {
-        if (resultadoqueryusuario.length == 0) {
-          res.status(403).send();
-        } else {
-          console.log("SU ID", resultadoqueryusuario[0].USUARIOID);
-          res.status(200).send();
-          
-        }
-      }
-    });
-    //});
-  }
-  validarcorreo(CORREOELECTRONICO);
-});
+  //utilizar el modulo requerido
+  functionvalidarcorreo.validarcorreo(CORREOELECTRONICO,CONTRASENA,res)
+})
 //configurar el puerto parar el servidor
 app.listen(3000, function () {
   console.log("servidor creado es http://localhost:3000");

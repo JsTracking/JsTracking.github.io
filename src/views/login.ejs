@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Login Page</title>
     <style>
       body {
@@ -88,30 +89,39 @@
       </form>
     </div>
     <script>
-      const form = document.getElementById('form-login')
-      
-      form.addEventListener('submit',(event)=>{
+      const form = document.getElementById("form-login");
+
+      form.addEventListener("submit", (event) => {
         event.preventDefault();
 
-        const correoelectronico = document.getElementById('CORREOELECTRONICO').value;
-        const contrasena = document.getElementById('CONTRASENA').value;
-        
+        const correoelectronico =
+          document.getElementById("CORREOELECTRONICO").value;
+        const contrasena = document.getElementById("CONTRASENA").value;
+
         const formdata = {
           CORREOELECTRONICO: correoelectronico,
-          CONTASENA: contrasena
-        }
-        fetch('/validar-login',{
-          method:'POST',
-          headers:{
-            'Content-Type':'application/json'
+          CONTRASENA: contrasena,
+        };
+        fetch("/validar-login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-          body:JSON.stringify(formdata)
-        })
-        .then(response =>{ 
-        if(response.status == 403) alert('correo invalido');
-        else window.location.href = 'http://localhost:3000/map'
-      })
-      })
+          body: JSON.stringify(formdata),
+        }).then((response) => {
+          if (response.status == 403) swal("Oops", "Credenciales de Acceso Invalidas", "error");
+          if (response.status === 200) {
+            swal("Bravo!", "Correo Valido", "success", {
+              buttons: false, 
+              timer: 1000
+            }).then(() => {
+              setTimeout(() => {
+                window.location.href = "http://localhost:3000/registroinformacionsalud";
+              }, 500); // Retraso de 500 milisegundos (0.5 segundos)
+            });
+          }
+        });
+      });
     </script>
   </body>
 </html>

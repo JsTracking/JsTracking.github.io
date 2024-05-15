@@ -176,62 +176,7 @@ input[type="submit"]:hover {
     <input type="submit" value="submit">
   </form>
 
-  <h1>Formulario de Información de Salud</h1>
 
-  <form id="informacionSaludForm">
-    <label for="documento">Documento:</label>
-    <input type="text" id="documento" name="documento" required>
-
-    <label for="alergias">Alergias:</label>
-    <input type="text" id="alergias" name="alergias" placeholder="Ingresa las alergias separadas por comas">
-
-    <label for="condicionesMedicas">Condiciones Médicas:</label>
-    <input type="text" id="condicionesMedicas" name="condicionesMedicas" placeholder="Ingresa las condiciones médicas separadas por comas">
-
-    <label for="medicamentos">Medicamentos:</label>
-    <input type="text" id="medicamentos" name="medicamentos" placeholder="Ingresa los medicamentos separados por comas">
-    
-    <input type="submit" value="submit"></input>
-  </form>
-
-  <script>
-    const form = document.getElementById('informacionSaludForm');
-
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-
-      //separar las cadenas de texto de los campos por comas 
-      const documento = document.getElementById('documento').value;
-      const alergias = document.getElementById('alergias').value.split(',').map(alergia => alergia.trim());
-      const condicionesMedicas = document.getElementById('condicionesMedicas').value.split(',').map(condicion => condicion.trim());
-      const medicamentos = document.getElementById('medicamentos').value.split(',').map(medicamento => medicamento.trim());
-
-      //almacenar cada dato de los campos en un objeto 
-      const formData = {
-        DOCUMENTO: documento,
-        ALERGIAS: alergias,
-        CONDICIONESMEDICAS: condicionesMedicas, 
-        MEDICAMENTOS: medicamentos
-      };
-
-      //enviar los datos del obejto al archivo app
-      fetch('/informacionsalud', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Respuesta del servidor:', data);
-        // Maneja la respuesta del servidor según tus necesidades
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    });
-  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
