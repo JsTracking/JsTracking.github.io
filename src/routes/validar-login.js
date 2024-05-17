@@ -1,6 +1,8 @@
 const connection = require('./connection')
 //validar acceso
-function validarcorreo(CORREOELECTRONICO,CONTRASENA, res) {
+function validarcorreo(req, res) {
+  const CORREOELECTRONICO = req.body.CORREOELECTRONICO;
+  const CONTRASENA = req.body.CONTRASENA;
       //return new Promise((resolve, reject) => {
       const usuarioquery = `SELECT USUARIOID FROM usuarios WHERE CORREOELECTRONICO = '${CORREOELECTRONICO}' AND CONTRASENA = '${CONTRASENA}'`;
       connection.connection.query(usuarioquery, (err, resultadoqueryusuario) => {
