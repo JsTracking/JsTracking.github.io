@@ -18,12 +18,12 @@ function registroinformacionsalud(req, res) {
           if (err) {
             reject(err);
           } else {
-            if(resultadoqueryusuario.length == 0){
+            if (resultadoqueryusuario.length == 0) {
               res.status(404).send();
-            }else{
+            } else {
               const IDUSUARIO = resultadoqueryusuario[0].USUARIOID;
-            console.log("USUARIO: ", IDUSUARIO);
-            resolve(IDUSUARIO);
+              console.log("USUARIO: ", IDUSUARIO);
+              resolve(IDUSUARIO);
             }
           }
         }

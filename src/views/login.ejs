@@ -109,14 +109,16 @@
           },
           body: JSON.stringify(formdata),
         }).then((response) => {
-          if (response.status == 403) swal("Oops", "Credenciales de Acceso Invalidas", "error");
+          if (response.status == 403)
+            swal("Oops", "Credenciales de Acceso Invalidas", "error");
           if (response.status === 200) {
             swal("Bravo!", "Correo Valido", "success", {
-              buttons: false, 
-              timer: 1000
+              buttons: false,
+              timer: 1000,
             }).then(() => {
               setTimeout(() => {
-                window.location.href = "http://localhost:3000/registroinformacionsalud";
+                window.location.href =
+                  "http://localhost:3000/registroinformacionsalud";
               }, 500); // Retraso de 500 milisegundos (0.5 segundos)
             });
           }

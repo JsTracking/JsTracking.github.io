@@ -143,7 +143,7 @@ function registrodireccion(req, res) {
         (err, resultadoinsertdireccion) => {
           if (err) {
             reject(err)
-          }else {
+          } else {
             const IDDIRECCION = resultadoinsertdireccion.insertId;
             console.log("IDINFORACIONSALUD: ", IDDIRECCION);
           }
@@ -157,18 +157,18 @@ function registrodireccion(req, res) {
       const idPais = await obtenerIdPais(FORMNOMBREPAIS);
       const idEstado = await obtenerIdEstado(FORMNOMBREESTADO, idPais);
       const idCiudad = await obtenerIdCiudad(FORMNOMBRECIUDAD, idEstado);
-      const promesas = [
-        insertardireccion(
-          CALLE,
-          idPais,
-          idEstado,
-          idCiudad,
-          CODIGOPOSTAL,
-          idUsuario
-        ),
-      ];
+//this way chek if the asycronous function insertardireccion is done to generate the response
       try {
-        Promise.all(promesas);
+        Promise.all([
+            insertardireccion(
+              CALLE,
+              idPais,
+              idEstado,
+              idCiudad,
+              CODIGOPOSTAL,
+              idUsuario
+            ),
+          ]);
         res.status(200).send();
       } catch (error) {
         res.status(500).send();
