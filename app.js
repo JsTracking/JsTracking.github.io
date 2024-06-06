@@ -3,7 +3,7 @@ const connection = require('./src/routes/connection')
 const { resolve } = require("dns");
 const express = require("express");
 const path = require("path");
-
+const express_session = require("express-session")
 //objetos para llamr los metodos express
 const app = express();
 
@@ -13,6 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Método para formatear los datos que llegan a este API por parte de los clientes que la consumen.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 
 //ruta de la carpeta contenedora de los archinos dinamicos
 app.set('views', path.join(__dirname, '/src/views'));
@@ -75,6 +76,14 @@ app.post("/validar-login", (req, res) => {
   //utilizar el modulo requerido
   functionvalidarcorreo.validarcorreo(req,res)
 })
+
+//middelware para la sesion
+app.use(express_session({
+  secret: 'mykey',
+  saveUninitialized: false,
+  resave:  false
+}))
+
 
 //configurar el puerto parar el servidor
 app.listen(3000, function () {

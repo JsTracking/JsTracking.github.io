@@ -22,14 +22,16 @@ function registrarusuario(req, res) {
       OCUPACION,
       NUMEROTELEFONO,
     ],
-    (error) => {
+    (error, resultadoinsertusuario) => {
       if (error) {
         throw error;
-      } else console.log("datos ingresados correctamente");
+      } else {
+        console.log("datos ingresados correctamente");}
       //REDIRECCIONAR A LA PAGINA INICIO
       res.redirect("/login");
     }
   );
+  
 }
 module.exports = {
   registrarusuario,
