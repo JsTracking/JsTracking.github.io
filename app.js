@@ -3,7 +3,7 @@ const connection = require('./src/routes/connection')
 const { resolve } = require("dns");
 const express = require("express");
 const path = require("path");
-const express_session = require("express-session")
+const session = require("express-session")
 //objetos para llamr los metodos express
 const app = express();
 
@@ -20,7 +20,7 @@ app.set('views', path.join(__dirname, '/src/views'));
 app.set('view engine', 'ejs');
 
 //renderizar el registro
-app.get("/registro", function (req, res) {
+app.get("/registro", function (_req, res) {
   connection.connection.query("SELECT * FROM generos", (err, results) => {
     if (err) throw err;
     res.render("registro", { generos: results });
@@ -28,14 +28,22 @@ app.get("/registro", function (req, res) {
 });
 
 //renderizar el registrodireccion
-app.get("/registrodireccion", function (req, res) {
+app.get("/registrodireccion", function (_req, res) {
   res.render("registrodireccion")
 })
 
 //renderizar el registro informacion salud
-app.get("/registroinformacionsalud", function (req, res) {
+app.get("/registroinformacionsalud", function (_req, res) {
   res.render("registroinformacionsalud.ejs");
 });
+
+//middelware para la sesion
+app.use(session({
+  secret: 'mykey',
+  saveUninitialized: false,
+  resave:  false,
+  cookie:{secure: true}
+}))
 
 //llamar las funciones exportadas para registrar un usuario
 const registrarusuario = require('./src/routes/registrousuario')
@@ -64,25 +72,20 @@ functioninsertsalud.registroinformacionsalud(req, res)
 })
 
 //hacer el render del login
-app.get("/login", function (req, res) {
+app.get("/login", function (_req, res) {
   res.render("login.ejs");
 });
 
 //requerir el modulo exportado para la validacion
-const functionvalidarcorreo = require ('./src/routes/validar-login');
+const functionvalidarcorreo = require ('./src/routes/login');
 
 //recibir los datos del front
-app.post("/validar-login", (req, res) => {
+app.post("/login", (req, res) => {
   //utilizar el modulo requerido
-  functionvalidarcorreo.validarcorreo(req,res)
+  functionvalidarcorreo.login(req,res)
 })
 
-//middelware para la sesion
-app.use(express_session({
-  secret: 'mykey',
-  saveUninitialized: false,
-  resave:  false
-}))
+
 
 
 //configurar el puerto parar el servidor

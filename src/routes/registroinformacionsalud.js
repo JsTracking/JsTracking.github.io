@@ -1,35 +1,21 @@
 const connection = require("./connection");
 //obtener idusuario
 function registroinformacionsalud(req, res) {
-  const DOCUMENTO = req.body.DOCUMENTO;
   const FORMALERGIAS = req.body.ALERGIAS;
   const FORMCONDICIONESMEDICAS = req.body.CONDICIONESMEDICAS;
   const FORMMEDICAMENTOS = req.body.MEDICAMENTOS;
-  console.log("DOCUMENTO:", DOCUMENTO);
+
+  // Get the user ID from the session
+  const IDUSUARIO = req.session.userId;
+
+  if (!IDUSUARIO) {
+    return res.status(401).send("User not authenticated");
+  }
+
+  console.log("USUARIO: ", IDUSUARIO);
   console.log("FORMALERGIAS:", FORMALERGIAS);
   console.log("FORMCONDICIONESMEDICAS:", FORMCONDICIONESMEDICAS);
   console.log("FORMMEDICAMENTOS", FORMMEDICAMENTOS);
-  function obtenerIdUsuario(DOCUMENT) {
-    return new Promise((resolve, reject) => {
-      const usuarioquery = `SELECT USUARIOID FROM usuarios WHERE DOCUMENTO = '${DOCUMENT}'`;
-      connection.connection.query(
-        usuarioquery,
-        (err, resultadoqueryusuario) => {
-          if (err) {
-            reject(err);
-          } else {
-            if (resultadoqueryusuario.length == 0) {
-              res.status(404).send();
-            } else {
-              const IDUSUARIO = resultadoqueryusuario[0].USUARIOID;
-              console.log("USUARIO: ", IDUSUARIO);
-              resolve(IDUSUARIO);
-            }
-          }
-        }
-      );
-    });
-  }
 
   //insertar en informacion salud y obtener id
   function insertarInformacionSalud(IDUSUARIO) {
@@ -181,35 +167,33 @@ function registroinformacionsalud(req, res) {
     });
   }
 
-  obtenerIdUsuario(DOCUMENTO)
-    .then(async (IdUsuario) => {
-      const InformacionSaludId =
-        await insertarInformacionSalud(IdUsuario);
-
-      const promesas = [
-        insertarCondicionesMedicas(
-          FORMCONDICIONESMEDICAS,
-          InformacionSaludId
-        ),
-        insertarAlergias(FORMALERGIAS, InformacionSaludId),
-        insertarMedicamentos(
-          FORMMEDICAMENTOS,
-          InformacionSaludId
-        ),
-      ];
-      try {
-        Promise.all(promesas);
-        res.status(200).send();
-      } catch (error) {
-        console.error("Error:", error);
-        res.status(500).send();
-      }
-    })
-    .catch((error) => {
+  insertarInformacionSalud(IDUSUARIO)
+  .then(async (InformacionSaludId) => {
+    const promesas = [
+      insertarCondicionesMedicas(
+        FORMCONDICIONESMEDICAS,
+        InformacionSaludId
+      ),
+      insertarAlergias(FORMALERGIAS, InformacionSaludId),
+      insertarMedicamentos(
+        FORMMEDICAMENTOS,
+        InformacionSaludId
+      ),
+    ];
+    try {
+      await Promise.all(promesas);
+      res.status(200).send();
+    } catch (error) {
       console.error("Error:", error);
-      res.status(500).send("Error al obtener el ID de usuario");
-    });
+      res.status(500).send();
+    }
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+    res.status(500).send("Error al insertar la información de salud");
+  });
 }
+
 module.exports = {
-  registroinformacionsalud,
-}
+registroinformacionsalud,
+};

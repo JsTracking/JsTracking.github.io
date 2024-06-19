@@ -86,8 +86,6 @@ input[type="submit"] {
     <h1>Formulario de Información de Salud</h1>
 
     <form id="informacionSaludForm">
-      <label for="documento">Documento:</label>
-      <input type="text" id="documento" name="documento" required>
   
       <label for="alergias">Alergias:</label>
       <input type="text" id="alergias" name="alergias" placeholder="Ingresa las alergias separadas por comas">
@@ -108,14 +106,12 @@ input[type="submit"] {
         event.preventDefault();
   
         //separar las cadenas de texto de los campos por comas 
-        const documento = document.getElementById('documento').value;
         const alergias = document.getElementById('alergias').value.split(',').map(alergia => alergia.trim());
         const condicionesMedicas = document.getElementById('condicionesMedicas').value.split(',').map(condicion => condicion.trim());
         const medicamentos = document.getElementById('medicamentos').value.split(',').map(medicamento => medicamento.trim());
   
         //almacenar cada dato de los campos en un objeto 
         const formData = {
-          DOCUMENTO: documento,
           ALERGIAS: alergias,
           CONDICIONESMEDICAS: condicionesMedicas, 
           MEDICAMENTOS: medicamentos
